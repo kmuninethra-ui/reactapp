@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Profile</title>
+<style>
+body{background:linear-gradient(135deg,#667eea,#764ba2);display:flex;justify-content:center;align-items:center;height:100vh;margin:0;font-family:Arial;color:white}
+.card{background:rgba(255,255,255,0.15);padding:30px;border-radius:20px;width:380px;text-align:center}
+.detail{text-align:left;background:rgba(255,255,255,0.2);padding:15px;border-radius:10px;margin:15px 0}
+button{padding:10px 20px;border:none;border-radius:8px;background:white;color:#667eea;font-weight:bold;cursor:pointer;margin:5px}
+table{width:100%;background:white;color:black;border-collapse:collapse;border-radius:10px;overflow:hidden;margin-top:10px}
+th,td{padding:8px;text-align:center;border-bottom:1px solid #ddd}
+th{background:#667eea;color:white}
+</style>
+</head>
+<body>
+<div class="card">
+  <h2>Profile Details</h2>
+  <div class="detail" id="myData"></div>
+  <button onclick="logout()">Logout</button>
+  <button onclick="showAll()">Show All Users</button>
+  <div id="all"></div>
+</div>
+
+<script>
+let user = JSON.parse(localStorage.getItem('currentUser'));
+if(!user) window.location = "login.html";
+document.getElementById('myData').innerHTML = `
+  <p><b>Name:</b> ${user.name}</p>
+  <p><b>Age:</b> ${user.age}</p>
+  <p><b>Gender:</b> ${user.gender}</p>
+  <p><b>Email:</b> ${user.email}</p>
+`;
+function logout(){ localStorage.removeItem('currentUser'); window.location="login.html"; }
+function showAll(){
+  let users = JSON.parse(localStorage.getItem('users')) || [];
+  let html = `<table><tr><th>#</th><th>Name</th><th>Age</th><th>Gender</th><th>Email</th></tr>`;
+  users.forEach((u,i)=>{
+    html += `<tr><td>${i+1}</td><td>${u.name}</td><td>${u.age}</td><td>${u.gender}</td><td>${u.email}</td></tr>`;
+  });
+  html += "</table>";
+  document.getElementById('all').innerHTML = html;
+}
+</script>
+</body>
+</html>

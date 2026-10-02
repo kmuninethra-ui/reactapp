@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<style>
+body{background:linear-gradient(135deg,#667eea,#764ba2);display:flex;justify-content:center;align-items:center;height:100vh;margin:0;font-family:Arial;color:white}
+.box{background:rgba(255,255,255,0.15);padding:30px;border-radius:20px;width:350px}
+h2{text-align:center}
+input{width:94%;padding:10px;margin:8px 0;border:none;border-radius:8px}
+button{width:100%;padding:12px;background:white;color:#667eea;border:none;border-radius:8px;font-weight:bold;cursor:pointer;margin-top:10px}
+a{color:white;text-align:center;display:block;margin-top:15px}
+</style>
+</head>
+<body>
+<div class="box">
+  <h2>Login</h2>
+  <input id="email" type="email" placeholder="Enter Your Email">
+  <input id="password" type="password" placeholder="Enter Password">
+  <button onclick="login()">Login</button>
+  <p id="msg" style="color:yellow;text-align:center"></p>
+  <a href="signup.html">Create New Account</a>
+</div>
+<script>
+function login(){
+  let email = document.getElementById('email').value;
+  let pass = document.getElementById('password').value;
+  let users = JSON.parse(localStorage.getItem('users')) || [];
+  let user = users.find(u => u.email === email && u.password === pass);
+  if(user){
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    window.location = "profile.html";
+  } else {
+    document.getElementById('msg').innerText = "Invalid Details! Check Email & Password";
+  }
+}
+</script>
+</body>
+</html>
